@@ -144,7 +144,7 @@ public class home_GUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        tipoData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horas", "Dias", "Mês(es)" }));
+        tipoData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hora(s)", "Dia(s)", "Mês(es)" }));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/confirmar.png"))); // NOI18N
         jButton6.setText("Criar Reserva");
@@ -446,12 +446,8 @@ public class home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-        try {
-            model.criar_r_DAO.gerarRelatorio();
-        } catch (SQLException ex) {
-            Logger.getLogger(home_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
