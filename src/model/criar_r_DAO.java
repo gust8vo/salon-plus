@@ -171,7 +171,7 @@ public class criar_r_DAO {
                 try {
                     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("logs.txt", true)));
                     out.println(reservador + " | " + data + " | " + tempo + " | " + sala + " | " + hora + " | Data de Registro: "
-                            + horaFormatada + dataFormatada);
+                            + horaFormatada + " " + dataFormatada);
                     out.close();
                 } catch (IOException e) {
                     
