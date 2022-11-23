@@ -1,4 +1,4 @@
-# reserva-sala
+# Salon+
 Trabalho originalmente desenvolvido para a matéria de programação do último semestre do curso de T.I.
 
 Com o objetivo de facilitar a reserva de salas, o programa tem uma interface simples para a reserva.
