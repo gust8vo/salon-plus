@@ -5,9 +5,11 @@
  */
 package view;
 
+import com.itextpdf.text.DocumentException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import static model.criar_r_DAO.carregaReservas;
 
 /**
@@ -144,7 +146,7 @@ public class home_GUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        tipoData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horas", "Dias", "Mês(es)" }));
+        tipoData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hora(s)", "Dia(s)", "Mês(es)" }));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/confirmar.png"))); // NOI18N
         jButton6.setText("Criar Reserva");
@@ -416,8 +418,12 @@ public class home_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sala6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        int check = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Saída", WIDTH);
         
-        System.exit(0);
+        if (check == 0){
+            System.exit(0);
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -448,10 +454,13 @@ public class home_GUI extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
         try {
-            model.criar_r_DAO.gerarRelatorio();
+            model.criaDoc_DAO.cria();
         } catch (SQLException ex) {
             Logger.getLogger(home_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(home_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
         
     }//GEN-LAST:event_jButton4ActionPerformed
 

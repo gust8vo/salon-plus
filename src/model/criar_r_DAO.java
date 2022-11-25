@@ -101,9 +101,20 @@ public class criar_r_DAO {
             
         }
         
+        view.home_GUI.reservador.setText("");
+        view.home_GUI.data.setText("");
+        view.home_GUI.tempo.setText("");
+        view.home_GUI.horario.setText("");
+        
     }
     
     public static void baixarReserva(){
+        
+        try {
+            gerarRelatorioLog();
+        } catch (SQLException ex) {
+            Logger.getLogger(criar_r_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         controller.Conexao_BD.carregaDriver();
 
@@ -144,44 +155,31 @@ public class criar_r_DAO {
         
     }
     
-    public static void gerarRelatorio() throws SQLException{
+    public static void gerarRelatorioLog() throws SQLException{
         
-        String SQL = "select * from reservas";
+        DefaultTableModel model = (DefaultTableModel) view.home_GUI.registros.getModel();
+        int row = view.home_GUI.registros.getSelectedRow();
+        String responsavel = view.home_GUI.registros.getModel().getValueAt(row, 0).toString();
+        String sala = view.home_GUI.registros.getModel().getValueAt(row, 1).toString();
+        String hora = view.home_GUI.registros.getModel().getValueAt(row, 2).toString();
+        String data = view.home_GUI.registros.getModel().getValueAt(row, 3).toString();
+        String tempo = view.home_GUI.registros.getModel().getValueAt(row, 4).toString();
         
-        Connection con = (Connection) DriverManager.getConnection(url, username, password);
-        
-        try{
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
+        LocalDateTime agora = LocalDateTime.now();
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+        String horaFormatada = formatterHora.format(agora);
+            
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String dataFormatada = formatterData.format(agora);
 
-            LocalDateTime agora = LocalDateTime.now();
-            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-            String horaFormatada = formatterHora.format(agora);
-            
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-            String dataFormatada = formatterData.format(agora);
-            
-            while(rs.next()){
-                String reservador = rs.getString("reservador");
-                String data = rs.getString("data");
-                String tempo = rs.getString("tempo");
-                String sala = rs.getString("sala");
-                String hora = rs.getString("horario");
-                
-                try {
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("logs.txt", true)));
-                    out.println(reservador + " | " + data + " | " + tempo + " | " + sala + " | " + hora + " | Data de Registro: "
-                            + horaFormatada + " " + dataFormatada);
-                    out.close();
-                } catch (IOException e) {
-                    
-                }
-                
-            }
-            System.out.println("Registro criado.");
-        }catch (Exception e){
-        }
-        
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("logs.txt", true)));
+            out.println(responsavel + " | " + sala + " | " + hora + " | " + data + " | " + tempo
+                    + " | Data de Registro: "+ horaFormatada + " " + dataFormatada);
+            out.close();
+        } catch (IOException e) {    
+        }   
+        System.out.println("Registro criado.");
     }
     
 }
